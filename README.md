@@ -1,5 +1,5 @@
 ## 关于处理成语为成语词典
-在idioms/文件夹中，idiom.py中将成语词典处理成[成语:释义]的形式，见idioms_dict.json
+在idiom_dict/文件夹中，idiom.py中将成语词典处理成[成语:释义]的形式，见idioms_dict.json
 
 ## 数据集？
 

@@ -2,6 +2,7 @@
 在idiom_dict/文件夹中，idiom.py中将成语词典处理成[成语:释义]的形式，见idioms_dict.json
 
 ## 数据集？
+add_idiom_to_dataset.py将成语的释义加入数据集中。
 
 ## 关于获得预测错的例子
 

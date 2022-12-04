@@ -3,7 +3,7 @@
 
 ## 数据集？
 add_idiom_to_dataset.py将成语的释义加入数据集中。
-
+add_truth_notation_to_dataset.py 只将正确成语的释义加入训练集
 ## 关于获得预测错的例子
 
 1. 修改huggingface trainer的eval代码，一般在/anaconda/envs/**/lib/python/site-packages/transformers/trainer.py

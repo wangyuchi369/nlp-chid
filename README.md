@@ -14,3 +14,6 @@ add_truth_notation_to_dataset.py 只将正确成语的释义加入训练集
    --output_dir ./tmp
    ```
 3. 去掉run.sh的--dotrain运行，结果文件为case.csv
+
+## 扩展数据集
+add_dataset_dict.py根据字典中的example扩展数据集

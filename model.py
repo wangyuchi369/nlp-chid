@@ -4,7 +4,7 @@ from torch.nn import CrossEntropyLoss
 import torch.nn.functional as F
 
 from allennlp.nn.util import batched_index_select
-from transformers import BertPreTrainedModel, BertModel, BertConfig
+from modeling_bert import BertPreTrainedModel, BertModel, BertConfig
 from transformers.modeling_outputs import MaskedLMOutput
 from transformers.models.bert.modeling_bert import BertOnlyMLMHead
 
@@ -17,13 +17,6 @@ class BertForChID(BertPreTrainedModel):
 
     def __init__(self, config):
         super().__init__(config)
-
-        # if config.is_decoder:
-        #     logger.warning(
-        #         "If you want to use `BertForMaskedLM` make sure `config.is_decoder=False` for "
-        #         "bi-directional self-attention."
-        #     )
-
         self.bert = BertModel(config, add_pooling_layer=False)
         self.cls = BertOnlyMLMHead(config)
 
@@ -36,15 +29,6 @@ class BertForChID(BertPreTrainedModel):
     def set_output_embeddings(self, new_embeddings):
         self.cls.predictions.decoder = new_embeddings
 
-    # @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
-    # @add_code_sample_docstrings(
-    #     processor_class=_TOKENIZER_FOR_DOC,
-    #     checkpoint=_CHECKPOINT_FOR_DOC,
-    #     output_type=MaskedLMOutput,
-    #     config_class=_CONFIG_FOR_DOC,
-    #     expected_output="'paris'",
-    #     expected_loss=0.88,
-    # )
     def forward(
         self,
         input_ids: Optional[torch.Tensor] = None,
@@ -70,6 +54,21 @@ class BertForChID(BertPreTrainedModel):
 
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
+        """
+        print("input_ids:", input_ids)
+        print("attention_mask:", attention_mask)
+        print("token_type_ids:", token_type_ids)
+        print("position_ids:", position_ids)
+        print("head_mask:", head_mask)
+        print("inputs_embeds:", inputs_embeds)
+        print("encoder_hidden_states:", encoder_hidden_states)
+        print("encoder_Attention_mask:",encoder_attention_mask)
+        print("labels:", labels)
+        print("candidates:", candidates)
+        print("candidate_mask:", candidate_mask)
+        print("output_attentions:", output_attentions)
+        print("output_hidden_states:", output_hidden_states)
+        """
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -86,6 +85,7 @@ class BertForChID(BertPreTrainedModel):
 
         sequence_output = outputs[0]
         prediction_scores = self.cls(sequence_output) # (Batch_size, Seq_len, Vocab_size)
+
 
         masked_lm_loss = None
         if labels is not None:

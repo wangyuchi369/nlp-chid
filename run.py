@@ -316,7 +316,6 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
-
     label_column_name = "labels"
     idiom_tag = '#idiom#'
 
@@ -398,14 +397,14 @@ def main():
                 remove_columns=["groundTruth", "realCount"],
                 num_proc=data_args.preprocessing_num_workers,
                 load_from_cache_file=not data_args.overwrite_cache,
-            )
+            )   ## 形成每个空一条数据的形式
 
             train_dataset = train_dataset.map(
                 preprocess_function_tokenize,
                 batched=True,
                 num_proc=data_args.preprocessing_num_workers,
                 load_from_cache_file=not data_args.overwrite_cache,
-            )
+            ) # 变成input_id
             # for index in range(3):
             #     logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
     if training_args.do_eval:

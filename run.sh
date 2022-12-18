@@ -2,7 +2,7 @@ python run.py \
 --model_name_or_path hfl/chinese-roberta-wwm-ext \
 --do_train \
 --do_eval \
---train_file CHID_dataset/train_data_1w.json \
+--train_file CHID_dataset/train_swap.json \
 --validation_file CHID_dataset/dev_data.json \
 --test_file CHID_dataset/test_data.json \
 --metric_for_best_model eval_accuracy \
